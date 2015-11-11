@@ -12,4 +12,13 @@ To try the project :
 
 `git clone git@github.com:PARobert/SpamDetection.git --recursive`
 
+## Remarks
 
+Others data sets for spam detections are available at :
+
+* [http://www.aueb.gr/users/ion/data/enron-spam/](http://www.aueb.gr/users/ion/data/enron-spam/)
+* [http://trec.nist.gov/data/spam.html](http://trec.nist.gov/data/spam.html)
+* [http://www.aueb.gr/users/ion/data/lingspam_public.tar.gz](http://www.aueb.gr/users/ion/data/lingspam_public.tar.gz)
+* [http://www.aueb.gr/users/ion/data/PU123ACorpora.tar.gz](http://www.aueb.gr/users/ion/data/PU123ACorpora.tar.gz)
+* [http://csmining.org/index.php/enron-spam-datasets.html](http://csmining.org/index.php/enron-spam-datasets.html)
+* [http://archive.ics.uci.edu/ml/datasets/Spambase](http://archive.ics.uci.edu/ml/datasets/Spambase)
