@@ -14,7 +14,7 @@ To try the project :
 
 ## Remarks
 
-Others data sets for spam detections are available at :
+Others data sets for spam detection are available at :
 
 * [http://www.aueb.gr/users/ion/data/enron-spam/](http://www.aueb.gr/users/ion/data/enron-spam/)
 * [http://trec.nist.gov/data/spam.html](http://trec.nist.gov/data/spam.html)
