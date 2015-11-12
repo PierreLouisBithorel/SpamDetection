@@ -1,6 +1,7 @@
 from urllib2 import urlopen
 import tarfile
 import os
+import pandas
 
 def downloadBases(currentDir):
     """
@@ -24,11 +25,34 @@ def downloadBases(currentDir):
 
     return
 
-# Archivage en local des données depuis un répertoir distant.
+class mail:
+    """
+    Mail analysis for the construction of a structured data set.
+    """
+    
+    def _init_(self, type, id):
+        self.type = type
+        self.number = None
+        self.date = None
+        self.id = id
+        self.body = None
+        self.subject = None
+        self.contextType = None
+
+    def importation(type, number):
+        localfile = open(currentDir + "/bases/" + type + number, 'r')
+        
+
+# Data storing from a distant repositorie.
 currentDir = os.getcwd()
 
 if not os.path.exists(currentDir + "/bases/"):
     os.mkdir(currentDir + "/bases")
     downloadBases(currentDir)
 
-# Création des bases de données.
+# Creation of a structured data set.
+architecture = {type : os.listdir(currentDir + "/bases/" + type) for type in os.listdir(currentDir + "/bases")}
+
+for type in architecture:
+    for number in architecture[type]:
+        
