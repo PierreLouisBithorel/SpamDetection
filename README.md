@@ -22,3 +22,9 @@ Others data sets for spam detection are available at :
 * [http://www.aueb.gr/users/ion/data/PU123ACorpora.tar.gz](http://www.aueb.gr/users/ion/data/PU123ACorpora.tar.gz)
 * [http://csmining.org/index.php/enron-spam-datasets.html](http://csmining.org/index.php/enron-spam-datasets.html)
 * [http://archive.ics.uci.edu/ml/datasets/Spambase](http://archive.ics.uci.edu/ml/datasets/Spambase)
+
+## Bibliography
+
+An indicatie bibliography used :
+
+Awad, W. A. & ELseuofi S. M. (2011). Machine Learning Methods for Spam E-Mail Classification, international Journal of Computer Science & Information Technology, 3(1), 173-184 (available [here](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.206.3185&rep=rep1&type=pdf))
