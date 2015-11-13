@@ -2,6 +2,7 @@ from urllib2 import urlopen
 import tarfile
 import os
 import pandas
+from email import message_from_file
 
 def downloadBases(currentDir):
     """
@@ -23,25 +24,7 @@ def downloadBases(currentDir):
         tarDir.close()
         os.remove(currentDir + "/bases/" + i)
 
-    return
-
-class mail:
-    """
-    Mail analysis for the construction of a structured data set.
-    """
-    
-    def _init_(self, type, id):
-        self.type = type
-        self.number = None
-        self.date = None
-        self.id = id
-        self.body = None
-        self.subject = None
-        self.contextType = None
-
-    def importation(type, number):
-        localfile = open(currentDir + "/bases/" + type + number, 'r')
-        
+    return        
 
 # Data storing from a distant repositorie.
 currentDir = os.getcwd()
@@ -54,5 +37,10 @@ if not os.path.exists(currentDir + "/bases/"):
 architecture = {type : os.listdir(currentDir + "/bases/" + type) for type in os.listdir(currentDir + "/bases")}
 
 for type in architecture:
-    for number in architecture[type]:
+    for file in architecture[type]:
+        emailMessage = message_from_file(open(currentDir + "/bases/" + type + "/" + file, 'r'))
+        emailMessage.get('From')
         
+
+emailMessage = message_from_file(open(currentDir + "/bases/spam/" + architecture['spam'][0]))
+print(emailMessage.get('From'))
