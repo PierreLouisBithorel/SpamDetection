@@ -43,13 +43,13 @@ for type in architecture:
         
 
 emailMessage = message_from_file(open(currentDir + "/bases/spam/" + architecture['spam'][0]))
+print(emailMessage.keys()) # Return all items in the header
 print(emailMessage.get('From'))
-print(emailMessage['From'])
-print(emailMessage['Subject'])
-print(emailMessage['Message-ID'])
-print(emailMessage['Date'])
+print(emailMessage.get('Subject'))
+print(emailMessage.get('Message-ID'))
+print(emailMessage.get('Date'))
 print(emailMessage.get_content_type().split('/',1)[0]) # Main content type
 print(emailMessage.get_content_type())
 print(emailMessage.get_payload()) # Body-content
-print(emailMessage.get_filename()) # Body-content
+print(emailMessage.get_filename()) # file name of the file attached if exists
 
