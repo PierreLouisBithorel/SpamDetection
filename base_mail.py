@@ -1,9 +1,17 @@
 from urllib2 import urlopen
 from email import message_from_file
-import tarfile, os, pandas, re
+import tarfile, os, pandas, re, nltk
+
+# Download stop words for semantic anylisis
+nltk.download("stopwords")
+stopWords = nltk.corpus.stopwords.words("english")
+
+# Analysis of local environement
+currentDir = os.getcwd()
 
 def downloadBases(currentDir):
     """ Download and extract datas in format .tar.bz2. """
+    
     depot = "http://spamassassin.apache.org/publiccorpus/"
     bases = ["20021010_easy_ham.tar.bz2", "20021010_hard_ham.tar.bz2", "20021010_spam.tar.bz2"]
     for i in bases:
@@ -27,15 +35,16 @@ class email:
         self.From = emailMessage.get('From')
         self.Subject = emailMessage.get('Subject')
         self.Date = emailMessage.get('Date')
-        self.Cc = self.removeSepInString(emailMessage.get('Cc'))
+        # self.Cc = self.emailStringToList(emailMessage.get('Cc'))
         self.Encoding = emailMessage.get('Content-Transfer-Encoding')
         self.Type = [emailMessage.get_content_maintype(), emailMessage.get_content_subtype()]
         self.AttachedFile = emailMessage.get_filename()
         self.IsMultipart = emailMessage.is_multipart()
         self.Body = emailMessage.get_payload()
 
-    def removeSepInString(self, string):
-        """ Remove separators in an email list. """
+    def emailStringToList(self, string):
+        """ Remove separators in an email list.
+        IT DOESN'T WORK YET !"""
         print(string)
         if string != None and string != '':
             print('\n')
@@ -54,10 +63,12 @@ class email:
         print(test)
         return test
 
+    def bodyToList(self):
+        self.Body = ' '.join([word for word in self.body.split() if word not in stopWords]).split()
+        
 
-# Data storing from a distant repositorie.
-currentDir = os.getcwd()
 
+# Data storing from a distant repository.
 if not os.path.exists(currentDir + "/bases/"):
     os.mkdir(currentDir + "/bases")
     downloadBases(currentDir)
@@ -66,18 +77,13 @@ if not os.path.exists(currentDir + "/bases/"):
 architecture = {type : os.listdir(currentDir + "/bases/" + type) for type in os.listdir(currentDir + "/bases")}
 error = [ ]
 
-df = pandas.DataFrame(columns = ['Message-ID', 'Type', 'From', 'Subject', 'Date', 'Forme', 'AttachedFile', 'MultiPart', 'Body'])
+df = pandas.DataFrame(columns = ['Message-ID', 'Primary Type', 'Secondary type', 'From', 'Subject', 'Date', 'Encoding', 'AttachedFile', 'MultiPart', 'Body'])
 row = 1
 
-i=1
 for type in architecture:
     for file in architecture[type]:
         email(currentDir + "/bases/" + type + "/" + file)
-        i+=1
-        print(i)
-        
-# df.to_csv(currentDir + "/bases/base.txt", sep="\t", index=False)
+        df.loc[row] = [email.MessageID, email.Type[0], email.Type[1], email.From, email.Subject, email.Date, email.Encoding, email.AttachedFile, email.MultiPart, email.Body]
+        row += 1
 
-
-
-# emailMessage = message_from_file(open("/home/pierre-antoine/Documents/Cours/Python/SpamDetection/bases/spam/0064.d700742b9815d990b2e5a7921e8d854c",'r'))
+df.to_csv(currentDir + "/bases/base.txt", sep="\t", index=False)
