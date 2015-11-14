@@ -35,21 +35,17 @@ if not os.path.exists(currentDir + "/bases/"):
 
 # Creation of a structured data set.
 architecture = {type : os.listdir(currentDir + "/bases/" + type) for type in os.listdir(currentDir + "/bases")}
+df = pandas.DataFrame(columns = ['Message-ID', 'From', 'Subject', 'Date', 'Type', 'AttachedFile', 'Body'])
+row = 1
 
 for type in architecture:
     for file in architecture[type]:
         emailMessage = message_from_file(open(currentDir + "/bases/" + type + "/" + file, 'r'))
-        emailMessage.get('From')
-        
+        df.loc[row] = [emailMessage.get('Message-ID'), emailMessage.get('From'), emailMessage.get('Subject'), emailMessage.get('Date'), emailMessage.get_content_type().split('/',1)[0], emailMessage.get_filename(), emailMessage.get_payload()]
+        row += 1
 
-emailMessage = message_from_file(open(currentDir + "/bases/spam/" + architecture['spam'][0]))
-print(emailMessage.keys()) # Return all items in the header
-print(emailMessage.get('From'))
-print(emailMessage.get('Subject'))
-print(emailMessage.get('Message-ID'))
-print(emailMessage.get('Date'))
-print(emailMessage.get_content_type().split('/',1)[0]) # Main content type
-print(emailMessage.get_content_type())
-print(emailMessage.get_payload()) # Body-content
-print(emailMessage.get_filename()) # file name of the file attached if exists
+df.to_csv(currentDir + "/bases/base.txt", sep="\t", index=False)
 
+
+
+# print(emailMessage.keys()) # Return all items in the header
