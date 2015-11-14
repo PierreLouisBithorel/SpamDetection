@@ -35,17 +35,21 @@ if not os.path.exists(currentDir + "/bases/"):
 
 # Creation of a structured data set.
 architecture = {type : os.listdir(currentDir + "/bases/" + type) for type in os.listdir(currentDir + "/bases")}
+error = [ ]
+
 df = pandas.DataFrame(columns = ['Message-ID', 'From', 'Subject', 'Date', 'Type', 'AttachedFile', 'Body'])
 row = 1
 
 for type in architecture:
     for file in architecture[type]:
         emailMessage = message_from_file(open(currentDir + "/bases/" + type + "/" + file, 'r'))
-        df.loc[row] = [emailMessage.get('Message-ID'), emailMessage.get('From'), emailMessage.get('Subject'), emailMessage.get('Date'), emailMessage.get_content_type().split('/',1)[0], emailMessage.get_filename(), emailMessage.get_payload()]
+        try:
+            df.loc[row] = [emailMessage.get('Message-ID'), emailMessage.get('From'), emailMessage.get('Subject'), emailMessage.get('Date'), emailMessage.get_content_type().split('/',1)[0], emailMessage.get_filename(), emailMessage.get_payload().split()]
+        except:
+            error.append(currentDir + "/bases/" + type + "/" + file)
         row += 1
 
-df.to_csv(currentDir + "/bases/base.txt", sep="\t", index=False)
+print(len(error))
 
-
-
+# df.to_csv(currentDir + "/bases/base.txt", sep="\t", index=False)
 # print(emailMessage.keys()) # Return all items in the header
