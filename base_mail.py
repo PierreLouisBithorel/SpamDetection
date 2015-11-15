@@ -13,7 +13,9 @@ def downloadBases(currentDir):
     """ Download and extract datas in format .tar.bz2. """
     
     depot = "http://spamassassin.apache.org/publiccorpus/"
-    bases = ["20021010_easy_ham.tar.bz2", "20021010_hard_ham.tar.bz2", "20021010_spam.tar.bz2"]
+    bases = ["20021010_easy_ham.tar.bz2", "20021010_hard_ham.tar.bz2",
+             "20021010_spam.tar.bz2"]
+        
     for i in bases:
         remoteFile = urlopen(depot + i)
         localFile = open(currentDir + "/bases/" + i, 'wb')
@@ -26,7 +28,7 @@ def downloadBases(currentDir):
         os.remove(currentDir + "/bases/" + i)
     return        
 
-class email:
+class Email:
     """ Mail analysis and dataset construction. """
 
     def __init__(self, adress):
@@ -37,10 +39,11 @@ class email:
         self.Date = emailMessage.get('Date')
         # self.Cc = self.emailStringToList(emailMessage.get('Cc'))
         self.Encoding = emailMessage.get('Content-Transfer-Encoding')
-        self.Type = [emailMessage.get_content_maintype(), emailMessage.get_content_subtype()]
+        self.Type = [emailMessage.get_content_maintype(),
+                     emailMessage.get_content_subtype()]
         self.AttachedFile = emailMessage.get_filename()
-        self.IsMultipart = emailMessage.is_multipart()
-        self.Body = emailMessage.get_payload()
+        self.IsMultiPart = emailMessage.is_multipart()
+        self.Body = self.bodyToList(emailMessage.get_payload())
 
     def emailStringToList(self, string):
         """ Remove separators in an email list.
@@ -63,8 +66,10 @@ class email:
         print(test)
         return test
 
-    def bodyToList(self):
-        self.Body = ' '.join([word for word in self.body.split() if word not in stopWords]).split()
+    def bodyToList(self, body):
+        print(body)
+        tmp = ' '.join([word for word in body.split() if word not in stopWords])
+        return tmp.split()
         
 
 
@@ -77,13 +82,18 @@ if not os.path.exists(currentDir + "/bases/"):
 architecture = {type : os.listdir(currentDir + "/bases/" + type) for type in os.listdir(currentDir + "/bases")}
 error = [ ]
 
-df = pandas.DataFrame(columns = ['Message-ID', 'Primary Type', 'Secondary type', 'From', 'Subject', 'Date', 'Encoding', 'AttachedFile', 'MultiPart', 'Body'])
-row = 1
+df = pandas.DataFrame(columns = ['Message-ID', 'Primary Type', 'Secondary type',
+                                 'From', 'Subject', 'Date', 'Encoding', 'AttachedFile',
+                                 'IsMultiPart', 'Body'])
 
+row = 0
 for type in architecture:
     for file in architecture[type]:
-        email(currentDir + "/bases/" + type + "/" + file)
-        df.loc[row] = [email.MessageID, email.Type[0], email.Type[1], email.From, email.Subject, email.Date, email.Encoding, email.AttachedFile, email.MultiPart, email.Body]
         row += 1
+        email = Email(currentDir + "/bases/" + type + "/" + file)
+        df.loc[row] = [email.MessageID, email.Type[0], email.Type[1], email.From,
+                       email.Subject, email.Date, email.Encoding, email.AttachedFile,
+                       email.IsMultiPart, email.Body]
+       
 
-df.to_csv(currentDir + "/bases/base.txt", sep="\t", index=False)
+# df.to_csv(currentDir + "/bases/base.txt", sep="\t", index=False)
