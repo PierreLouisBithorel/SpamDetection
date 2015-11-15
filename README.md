@@ -27,4 +27,6 @@ Others data sets for spam detection are available at :
 
 An indicative bibliography used :
 
-Awad, W. A. & ELseuofi S. M. (2011). Machine Learning Methods for Spam E-Mail Classification, international Journal of Computer Science & Information Technology, 3(1), 173-184. (available [here](http://airccse.org/journal/jcsit/0211ijcsit12.pdf))
+Awad, W. A. & ELseuofi S. M. (2011). Machine Learning Methods for Spam E-Mail Classification. International Journal of Computer Science & Information Technology, 3(1), 173-184. (available [here](http://airccse.org/journal/jcsit/0211ijcsit12.pdf))
+
+Xu H., Yu, B. (2010). Automatic thesaurus construction for spam filtering using revised back propagation neural network. Expert Systems with Applications, 37, 18-23. (available [here](https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=25&ved=0CEAQFjAEOBRqFQoTCLLAoabEkMkCFUGCDwodktUBFg&url=http%3A%2F%2Fromisatriawahono.net%2Flecture%2Fdm%2Fpaper%2Fclassification%2FXu%2520-%2520Automatic%2520thesaurus%2520construction%2520for%2520spam%2520filtering%2520using%2520revised%2520BP%2520NN%2520-%25202010.pdf&usg=AFQjCNGuRBSQsjnwlUg14d7pKKTHV5asqg&sig2=iVIMOPKbFBHXPZwJD5ZmqQ&bvm=bv.107467506,d.ZWU&cad=rja))
