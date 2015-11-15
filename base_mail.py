@@ -72,8 +72,8 @@ class Email:
             for subMail in body:
                 return self.bodyToList(subMail.get_payload())
         else:
-            return ' '.join([word for word in body.split() if
-                             word not in stopWords]).split()
+            return ' '.join([word for word in body.split()
+                             if word not in stopWords]).split()
         
 
 
@@ -83,7 +83,8 @@ if not os.path.exists(currentDir + "/bases/"):
     downloadBases(currentDir)
 
 # Creation of a structured data set.
-architecture = {type : os.listdir(currentDir + "/bases/" + type) for type in os.listdir(currentDir + "/bases")}
+architecture = {type : os.listdir(currentDir + "/bases/" + type)
+                for type in os.listdir(currentDir + "/bases")}
 error = [ ]
 
 df = pandas.DataFrame(columns = ['Message-ID', 'Class', 'Primary Type',
