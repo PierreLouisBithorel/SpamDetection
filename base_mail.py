@@ -67,9 +67,13 @@ class Email:
         return test
 
     def bodyToList(self, body):
-        print(body)
-        tmp = ' '.join([word for word in body.split() if word not in stopWords])
-        return tmp.split()
+        """Transforme a message payload in a list of words without stopwords."""
+        if isinstance(body, list):
+            for subMail in body:
+                return self.bodyToList(subMail.get_payload())
+        else:
+            return ' '.join([word for word in body.split() if
+                             word not in stopWords]).split()
         
 
 
