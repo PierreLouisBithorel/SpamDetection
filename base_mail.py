@@ -86,18 +86,18 @@ if not os.path.exists(currentDir + "/bases/"):
 architecture = {type : os.listdir(currentDir + "/bases/" + type) for type in os.listdir(currentDir + "/bases")}
 error = [ ]
 
-df = pandas.DataFrame(columns = ['Message-ID', 'Primary Type', 'Secondary type',
-                                 'From', 'Subject', 'Date', 'Encoding', 'AttachedFile',
-                                 'IsMultiPart', 'Body'])
+df = pandas.DataFrame(columns = ['Message-ID', 'Class', 'Primary Type',
+                                 'Secondary type', 'From', 'Subject', 'Date',
+                                 'Encoding', 'AttachedFile', 'IsMultiPart', 'Body'])
 
 row = 0
-for type in architecture:
-    for file in architecture[type]:
+for emailClass in architecture:
+    for file in architecture[emailClass]:
         row += 1
-        email = Email(currentDir + "/bases/" + type + "/" + file)
-        df.loc[row] = [email.MessageID, email.Type[0], email.Type[1], email.From,
-                       email.Subject, email.Date, email.Encoding, email.AttachedFile,
-                       email.IsMultiPart, email.Body]
-       
+        email = Email(currentDir + "/bases/" + emailClass + "/" + file)
+        df.loc[row] = [email.MessageID, emailClass, email.Type[0], email.Type[1],
+                       email.From, email.Subject, email.Date, email.Encoding,
+                       email.AttachedFile, email.IsMultiPart, email.Body]
 
-# df.to_csv(currentDir + "/bases/base.txt", sep="\t", index=False)
+# Saving of the data set.
+df.to_csv(currentDir + "/bases/base.txt", sep="\t", index=False)
