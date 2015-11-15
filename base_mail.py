@@ -85,7 +85,6 @@ if not os.path.exists(currentDir + "/bases/"):
 # Creation of a structured data set.
 architecture = {type : os.listdir(currentDir + "/bases/" + type)
                 for type in os.listdir(currentDir + "/bases")}
-error = [ ]
 
 df = pandas.DataFrame(columns = ['Message-ID', 'Class', 'Primary Type',
                                  'Secondary type', 'From', 'Subject', 'Date',
