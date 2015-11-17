@@ -48,6 +48,7 @@ class Email:
     def emailStringToList(self, string):
         """ Remove separators in an email list.
         IT DOESN'T WORK YET !"""
+        
         print(string)
         if string != None and string != '':
             print('\n')
@@ -68,6 +69,7 @@ class Email:
 
     def bodyToList(self, body):
         """Transforme a message payload in a list of words without stopwords."""
+        
         if isinstance(body, list):
             for subMail in body:
                 return self.bodyToList(subMail.get_payload())
